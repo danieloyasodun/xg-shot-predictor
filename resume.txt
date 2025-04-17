@@ -6,3 +6,9 @@ Resume-Ready Project Description:
 Built an interactive football pitch web app where users click to simulate shots and receive real-time xG predictions, using React, D3.js, and a machine learning model trained on historical match data.
 
 Deployed a serverless backend with FastAPI and AWS Lambda, integrating a custom xG model for live inference and hosted the project via AWS S3 and API Gateway for scalable access.
+
+xG Shot Predictor Dashboard
+
+    Developed an interactive web application that visualizes a football pitch and allows users to click any point to view the expected goals (xG) value of a shot taken from that position, using a custom-built xG model.
+
+    Engineered the backend using Python and Jupyter notebooks for model development, and AWS (S3, Lambda, Athena) for data storage, processing, and querying; built the frontend using React and Tailwind CSS for dynamic and responsive UI.
