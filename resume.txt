@@ -1,0 +1,4 @@
+Resume-Ready Project Description:
+
+    xG Shot Predictor Web App
+    Built an interactive football pitch web app where users can click anywhere to visualize the expected goal (xG) value of a shot from that location. Used D3.js for the pitch UI, trained an ML model on historical shot data, and deployed it using FastAPI + AWS Lambda. Integrated real-time prediction API and interactive data visualization.
