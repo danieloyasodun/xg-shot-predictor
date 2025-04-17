@@ -1,76 +1,90 @@
-# xG Shot Predictor Web App
+# ⚽ xG Shot Predictor Web App (Next.js)
 
-## 🚀 Project Overview
-An interactive web application that displays a football pitch and allows users to click anywhere on the field to simulate a shot. Based on the clicked coordinates, the app returns the expected goals (xG) value of that shot using a machine learning model trained on historical shot data.
+## 🚀 Project Overview  
+A fully interactive web app built with **Next.js** that displays a football pitch where users can click to simulate a shot. Based on the clicked position, it returns the **expected goals (xG)** value using a trained machine learning model.
 
 ---
 
 ## 🧠 Workflow Overview
 
 ### 1. Data Collection & Model Training
-- **Source data**: Use Understat, FBref, or other public datasets.
-- **Clean and preprocess**:
-  - Extract shot coordinates, distance, angle, body part, shot type, etc.
-- **Feature engineering**:
-  - Calculate shot angle, distance from goal.
-  - Encode categorical variables.
-- **Model training**:
-  - Use Logistic Regression, Random Forest, or XGBoost.
-  - Save trained model (`model.pkl`).
+- **Source data**: Use public datasets like Understat, FBref, or Kaggle.
+- **Preprocessing**:
+  - Extract key shot features: coordinates, angle, distance, body part, etc.
+- **Feature Engineering**:
+  - Calculate shot angle and distance.
+  - Encode categorical features.
+- **Modeling**:
+  - Train a model (Logistic Regression, Random Forest, or XGBoost).
+  - Save as `model.pkl`.
+
+---
 
 ### 2. Backend (API)
-- **Framework**: FastAPI (or Flask)
+- **Framework**: FastAPI
 - **Endpoints**:
-  - `/predict`: Accepts shot coordinates & metadata, returns xG.
-- **Model loading**:
-  - Load `model.pkl` and respond with prediction.
-- **Deployment**:
-  - Local demo: run FastAPI server.
-  - Production: deploy via AWS Lambda or EC2.
+  - `POST /predict`: Accepts shot input, returns xG prediction.
+- **Setup**:
+  - Load model (`model.pkl`) on startup.
+- **Deployment Options**:
+  - Local: FastAPI with Uvicorn.
+  - Production: AWS Lambda (via Mangum) or Dockerized EC2.
 
-### 3. Frontend (UI)
-- **Framework**: React (with D3.js or Konva.js)
-- **Components**:
-  - Interactive football pitch (SVG or Canvas).
-  - Capture click events to get `(x, y)`.
-  - Optional: dropdowns for shot type, body part.
-- **API call**:
-  - POST to `/predict` with input data.
-  - Display xG result on-screen.
+---
+
+### 3. Frontend (UI with Next.js)
+- **Framework**: Next.js (React-based)
+- **Rendering**: Use `Canvas` (via Konva.js) or `SVG` (via D3.js) for pitch.
+- **Core Components**:
+  - `Pitch`: full-field clickable area.
+  - `ShotForm`: optional dropdowns (shot type, body part).
+  - `ResultBox`: displays xG value after prediction.
+- **API Integration**:
+  - Call FastAPI `/predict` endpoint via `fetch()` or Axios.
+- **Enhancements**:
+  - Add animations, tooltips, or shot trails.
+
+---
 
 ### 4. Hosting & Deployment
-- **Frontend**: Vercel, Netlify, or S3 Static Hosting.
-- **Backend**: AWS Lambda + API Gateway or EC2 with Docker.
-- **Model hosting**: AWS SageMaker (optional, for more advanced ML infra).
+- **Frontend**: Deployed via **Vercel** (ideal for Next.js).
+- **Backend**:
+  - Lightweight: AWS Lambda + API Gateway.
+  - Heavier: EC2 with Docker or Fly.io.
+- **ML Model**:
+  - Can be embedded in backend or hosted on AWS SageMaker (optional).
 
 ---
 
 ## 🛠 Tech Stack
 
-| Layer     | Tools                               |
-|-----------|-------------------------------------|
-| Frontend  | React, D3.js or Konva.js, Tailwind  |
-| Backend   | FastAPI, Python, Uvicorn             |
-| ML Model  | Scikit-learn, XGBoost, Pandas       |
-| Hosting   | AWS Lambda, API Gateway, S3, EC2    |
-| Data      | Understat, FBref, Kaggle            |
+| Layer     | Tools                                |
+|-----------|--------------------------------------|
+| Frontend  | **Next.js**, D3.js or Konva.js, TailwindCSS |
+| Backend   | **FastAPI**, Python, Uvicorn          |
+| ML Model  | Scikit-learn, XGBoost, Pandas        |
+| Hosting   | Vercel, AWS Lambda, EC2              |
+| Data      | Understat, FBref, Kaggle             |
 
 ---
 
 ## ✨ Bonus Features
-- Show historical examples of shots from clicked area.
-- Aggregate xG visualization (simulate multiple shots).
-- User-auth + track shot history.
-- Add mobile responsiveness and animations.
+- Display historical shots similar to clicked location.
+- Simulate and visualize multiple shots (aggregate xG heatmaps).
+- User login with saved shot history.
+- Fully mobile responsive + smooth animations.
 
 ---
 
-## 📁 Project Structure (suggested)
+## 📁 Suggested Project Structure
+
 ```
 /xg-shot-predictor
 │
-├── frontend/
-│   └── src/components/Pitch.jsx
+├── frontend/ (Next.js App)
+│   ├── pages/index.tsx
+│   ├── components/Pitch.tsx
+│   └── styles/
 │
 ├── backend/
 │   ├── app/main.py
@@ -89,10 +103,10 @@ An interactive web application that displays a football pitch and allows users t
 
 ## ✅ Milestones
 
-- [ ] Collect & clean shot data
-- [ ] Train xG model and export
-- [ ] Build backend API (FastAPI)
-- [ ] Build interactive pitch (React)
-- [ ] Connect frontend with backend
-- [ ] Host frontend & backend
-- [ ] Polish UI + deploy to resume
+- [ ] Collect and preprocess shot data  
+- [ ] Train and save xG model  
+- [ ] Build FastAPI backend with `/predict`  
+- [ ] Build pitch interaction in Next.js  
+- [ ] Connect frontend ↔ backend  
+- [ ] Deploy backend (Lambda/EC2) and frontend (Vercel)  
+- [ ] Final UI polish + deploy
