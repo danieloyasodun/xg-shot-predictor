@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -6,7 +7,7 @@ export default function Home() {
       <div>
         {/* Navigation Bar */}
         <nav className="navbar">
-          <a href="/">Home</a>
+        <Link href="/">Home</Link>
           <span className="under-construction">Under Construction 🚧</span>
         </nav>
 
