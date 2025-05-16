@@ -1,13 +1,15 @@
 "use client";
 import Link from 'next/link';
 
+
 export default function Home() {
   return (
     <div> 
       <div>
         {/* Navigation Bar */}
         <nav className="navbar">
-        <Link href="/">Home</Link>
+          <span className="brand">xG Dashboard</span>
+          <Link href="/">Home</Link>
           <span className="under-construction">Under Construction 🚧</span>
         </nav>
 

@@ -81,6 +81,10 @@ button:hover {
   font-style: italic;
 }
 
+.brand {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
 
 /* Navbar links */
 .navbar a {
