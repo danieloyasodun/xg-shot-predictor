@@ -1,12 +1,71 @@
 "use client";
+import { useState } from 'react';
 import Link from 'next/link';
 
 
 export default function Home() {
+  const [ballPos, setBallPos] = useState<{ x: number; y: number }>({ x: 0.5, y: 0.5 });
+  const [bodyPart, setBodyPart] = useState('left_foot');
+  const [assistType, setAssistType] = useState('none');
+  const [distance, setDistance] = useState<number | null>(null);
+  const [angle, setAngle] = useState<number | null>(null);
+
+  const pitchLength = 105; // meters
+  const pitchWidth = 68;
+
+  function convertToMeters(normalizedX: number, normalizedY: number) {
+    return {
+      x: normalizedX * pitchLength,
+      y: normalizedY * pitchWidth,
+    };
+  }
+
+  function calculateDistanceMeters(x: number, y: number, goalSide: "left" | "right") {
+    const goalX = goalSide === "left" ? 0 : pitchLength;
+    const goalY = pitchWidth / 2;
+    return Math.sqrt((x - goalX) ** 2 + (y - goalY) ** 2);
+  }
+
+  function calculateAngle(x: number, y: number, goalSide: "left" | "right"): number {
+    const goalX = goalSide === "left" ? 0 : 1;
+    const goalY = 0.5;
+    const dx = goalX - x;
+    const dy = goalY - y;
+    const angleRadians = Math.atan2(dy, dx);
+    const angleDegrees = Math.abs((angleRadians * 180) / Math.PI);
+    return angleDegrees;
+  }
+
+ function onPitchClick(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    let rawX = e.clientX - rect.left;
+    let rawY = e.clientY - rect.top;
+
+    // Clamp rawX and rawY inside pitch boundaries
+    rawX = Math.min(Math.max(0, rawX), rect.width);
+    rawY = Math.min(Math.max(0, rawY), rect.height);
+
+    const normalizedX = rawX / rect.width;
+    const normalizedY = 1 - rawY / rect.height;
+
+    const goalSide: "left" | "right" = normalizedX > 0.5 ? "right" : "left";
+
+    const meters = convertToMeters(normalizedX, normalizedY);
+    const dist = calculateDistanceMeters(meters.x, meters.y, goalSide);
+    const ang = calculateAngle(normalizedX, normalizedY, goalSide);
+
+    setBallPos({ x: normalizedX, y: normalizedY });
+    setDistance(dist);
+    setAngle(ang);
+  }
+
+  const goalSide: "left" | "right" = ballPos.x > 0.5 ? "right" : "left";
+  const goalNormalizedX = goalSide === "left" ? 0 : 1;
+  const goalNormalizedY = 0.5;
+
   return (
-    <div> 
-      <div>
-        {/* Navigation Bar */}
+    <div>
+      {/* Navigation Bar */}
         <nav className="navbar">
           <span className="brand">xG Dashboard</span>
           <Link href="/">Home</Link>
@@ -55,21 +114,99 @@ export default function Home() {
           </div>
         </div>
 
-
+      {/* Pitch and Input Side-by-Side */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '2rem', marginTop: '2rem' }}>
         {/* Football Pitch */}
-        <div className="football-pitch"
-        onClick={(e) => {
-          const rect = e.currentTarget.getBoundingClientRect();
-          const x = e.clientX - rect.left; // x relative to pitch left
-          const y = e.clientY - rect.top;  // y relative to pitch top
-          console.log(`Clicked at: x=${x}, y=${y}`);
-        }}>
+        <div
+          className="football-pitch"
+          onClick={onPitchClick}
+          style={{ position: 'relative', background: '#0a7a0a', cursor: 'crosshair' }}
+        >
+          {/* Example pitch markings */}
           <div className="center-circle"></div>
           <div className="half-line"></div>
           <div className="penalty-box left"></div>
           <div className="penalty-box right"></div>
           <div className="goal-box left"></div>
           <div className="goal-box right"></div>
+
+          {/* SVG for line */}
+          <svg
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
+          >
+            <line
+              x1={`${ballPos.x * 100}%`}
+              y1={`${(1 - ballPos.y) * 100}%`}
+              x2={`${goalNormalizedX * 100}%`}
+              y2={`${(1 - goalNormalizedY) * 100}%`}
+              stroke="yellow"
+              strokeWidth={2}
+            />
+          </svg>
+
+          {/* Ball (circle) */}
+          <div
+            style={{
+              position: 'absolute',
+              left: `${ballPos.x * 100}%`,
+              top: `${(1 - ballPos.y) * 100}%`,
+              transform: 'translate(-50%, -50%)',
+              width: 20,
+              height: 20,
+              borderRadius: '50%',
+              backgroundColor: 'white',
+              border: '2px solid black',
+              pointerEvents: 'none', // so clicks go through to pitch div
+            }}
+          ></div>
+        </div>
+
+        {/* Coordinates Display */}
+        <div className="coordinate-form" style={{ minWidth: '200px' }}>
+          <h3>Shot Coordinates</h3>
+          <form>
+            <label>
+              X:
+              <input type="text" value={ballPos.x.toFixed(3)} readOnly />
+            </label>
+            <br />
+            <label>
+              Y:
+              <input type="text" value={ballPos.y.toFixed(3)} readOnly />
+            </label>
+            <br />
+            <label>
+              Distance to Goal:
+              <input type="text" value={distance?.toFixed(3) || ''} readOnly />
+            </label>
+            <br />
+            <label>
+              Angle to Goal (°):
+              <input type="text" value={angle?.toFixed(1) || ''} readOnly />
+            </label>
+            <br />
+            <label>
+              Body Part:
+              <select value={bodyPart} onChange={(e) => setBodyPart(e.target.value)}>
+                <option value="left_foot">Left Foot</option>
+                <option value="right_foot">Right Foot</option>
+                <option value="head">Head</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+            <br />
+            <label>
+              Assist Type:
+              <select value={assistType} onChange={(e) => setAssistType(e.target.value)}>
+                <option value="none">None</option>
+                <option value="cross">Cross</option>
+                <option value="through_ball">Through Ball</option>
+                <option value="cutback">Cutback</option>
+                <option value="rebound">Rebound</option>
+                <option value="set_piece">Set Piece</option>
+              </select>
+            </label>
+          </form>
         </div>
       </div>
     </div>
