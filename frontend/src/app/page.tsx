@@ -1,103 +1,74 @@
-import Image from "next/image";
+"use client";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div> 
+      <div>
+        {/* Navigation Bar */}
+        <nav className="navbar">
+          <a href="/">Home</a>
+          <span className="under-construction">Under Construction 🚧</span>
+        </nav>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        {/* Main Content */}
+        <div className="content">
+          <div className="boxes-container">
+            <div className="box">
+              <h1>Welcome to the Interactive xG Dashboard</h1>
+              <p>
+                This fully interactive web application, built with Next.js, allows football fans and analysts to explore the concept of Expected Goals (xG) in a hands-on way.
+                Users can click anywhere on the displayed football pitch to simulate shots, and the app instantly calculates the xG value based on the exact shot location using a trained machine learning model.
+                This helps visualize shot quality and probability of scoring in different areas of the pitch, providing deeper insights into player and team performance beyond traditional stats.
+              </p>
+            </div>
+
+            <div className="box">
+              <h1>What is Expected Goals (xG)?</h1>  
+              <p>
+                Expected Goals (xG) is a performance metric used in football (soccer) analytics to estimate the probability that a given shot will result in a goal. The xG value of a shot ranges from 0 to 1, where 1.0 means a shot is almost certain to score, and 0.0 means a goal is nearly impossible.
+                xG is calculated based on various factors that influence shot quality, such as the location on the pitch, angle to goal, distance, body part used, type of assist, shot type, and whether the shooter was under pressure. The goal is to capture how likely a shot is to score based on historical data of similar situations.
+                By summing xG values over a match or season, analysts can assess whether a player or team is finishing efficiently, creating high-quality chances, or outperforming expected performance — making it a crucial tool for understanding performance beyond just goals and assists.
+              </p> 
+            </div>
+
+            <div className="box">
+              <h1>How the Interactive Pitch Works</h1>
+              <p>
+                The football pitch below is fully interactive. Simply click anywhere on the pitch to simulate a shot from that location.
+                The app captures the exact coordinates of your click, feeds this data into a trained machine learning model, and instantly returns the expected goals (xG) value.
+                This dynamic interaction allows you to experiment with shot positions and understand how different areas of the pitch affect scoring probabilities in real time.
+              </p>
+            </div>
+
+            <div className="box">
+              <h1>About This Project</h1>
+              <p>
+                Expected Goals modeling is transforming football analytics by providing deeper insights into chance quality rather than just goals scored.
+                This project uses a neural network trained on over 100,000 shots with multiple parameters to predict shot success probability with high precision.
+                Our interactive pitch lets users simulate shots and instantly receive xG values based on exact shot locations.
+                The goal is to empower fans and analysts with cutting-edge tools to better understand team and player performance across Europe’s top leagues.
+              </p>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+
+        {/* Football Pitch */}
+        <div className="football-pitch"
+        onClick={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          const x = e.clientX - rect.left; // x relative to pitch left
+          const y = e.clientY - rect.top;  // y relative to pitch top
+          console.log(`Clicked at: x=${x}, y=${y}`);
+        }}>
+          <div className="center-circle"></div>
+          <div className="half-line"></div>
+          <div className="penalty-box left"></div>
+          <div className="penalty-box right"></div>
+          <div className="goal-box left"></div>
+          <div className="goal-box right"></div>
+        </div>
+      </div>
     </div>
   );
 }
