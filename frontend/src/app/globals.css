@@ -188,3 +188,48 @@ button:hover {
   border: 1px solid #aaa;
   border-radius: 4px;
 }
+
+.coordinate-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.coordinate-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  
+}
+
+.coordinate-form input,
+.coordinate-form select {
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.coordinate-form button {
+  padding: 10px 14px;
+  font-size: 1rem;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.coordinate-form button:hover {
+  background-color: #004a99;
+}
+
+.coordinate-form button:active {
+  background-color: #003d80;
+}
+
+.coordinate-form button + button {
+  margin-top: 6px;
+}
+

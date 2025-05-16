@@ -206,6 +206,16 @@ export default function Home() {
                 <option value="set_piece">Set Piece</option>
               </select>
             </label>
+            <br/>
+            <button type="button" onClick={() => alert('Get xG: This feature is a work in progress.')}>
+              Get xG
+            </button>
+            <button type="button" onClick={() => alert('Post-shot xG: This feature is a work in progress.')}>
+              View post-shot xG
+            </button>
+            <button type="button" onClick={() => alert('xGSoT: This feature is a work in progress.')}>
+              View xGSoT
+            </button>
           </form>
         </div>
       </div>
