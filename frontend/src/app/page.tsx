@@ -176,7 +176,7 @@ export default function Home() {
             </label>
             <br />
             <label>
-              Distance to Goal:
+              Distance to Goal (meters):
               <input type="text" value={distance?.toFixed(3) || ''} readOnly />
             </label>
             <br />
